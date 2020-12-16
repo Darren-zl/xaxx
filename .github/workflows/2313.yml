@@ -33,7 +33,7 @@ jobs:
       - if: endsWith(github.REF, '/master') != true
         name: 'Run an analysis of the ${github.REF} branch'
         env:
-		  ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
           # to get access to secrets.SONAR_TOKEN, provide GITHUB_TOKEN
           GITHUB_TOKEN: ${72e0374550704c0866b3b5ad4d6c19a274958328}
         run: sonar-scanner
@@ -46,7 +46,7 @@ jobs:
       - if: endsWith(github.REF, '/master') == true
         name: 'Run an analysis of the master branch'
         env:
-		  ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
           # to get access to secrets.SONAR_TOKEN, provide GITHUB_TOKEN
           GITHUB_TOKEN: ${72e0374550704c0866b3b5ad4d6c19a274958328}
         run: sonar-scanner
