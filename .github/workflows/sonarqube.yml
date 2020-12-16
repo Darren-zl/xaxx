@@ -9,5 +9,5 @@ jobs:
     - name: SonarQube Scan
       uses: kitabisa/sonarqube-action@v1.1.0
       with:
-        host: ${http://115.236.46.99:30000/dashboard?id=ddddd}
+        host: ${http://115.236.46.99:30000}
         login: ${a03dba2f38dba968b430c80d0f7cd0449640676a}
