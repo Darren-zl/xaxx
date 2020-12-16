@@ -1,0 +1,55 @@
+# Start by giving a name to your workflow
+name: Analyze branch
+
+# then define on which event, here a push
+on:
+  push:
+  # and the target with some regex to match our specific  branch names
+    branches:
+      - master
+      - 'JAHIA-[0-9]-[0-9]-[0-9]-X-BRANCH'
+      - '[0-9]_[0-9]_x'
+      - '[0-9]-[0-9]-X-BRANCH'
+
+# We can now build our job
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # Use an existing action, you can look in the market place to find what you need and how to use it, to setup the sonar scanner
+      - name: SonarScanner for xx
+        uses: warchant/setup-sonar-scanner@v1
+
+      # Another existing action, this one to checkout the repository
+      - name: 'Checkout repository on branch: ${xaxx}'
+        uses: actions/checkout@v2
+        with:
+          ref: ${xaxx}
+          fetch-depth: 0
+
+      # Conditional execution can be done, in this case the parameter to use with sonar scanner are different if we are analyzing master or a branch
+      - if: endsWith(xaxx, '/master') != true
+        name: 'Run an analysis of the ${xaxx} branch'
+        env:
+          # to get access to secrets.SONAR_TOKEN, provide GITHUB_TOKEN
+          GITHUB_TOKEN: ${72e0374550704c0866b3b5ad4d6c19a274958328}
+        run: sonar-scanner
+          -Dsonar.host.url=${http://115.236.46.99:30000}
+          -Dsonar.login=${a03dba2f38dba968b430c80d0f7cd0449640676a}
+          -Dsonar.projectKey=${64165b555d80615802f01d30b3c0e5c0ec82405c}
+          -Dsonar.branch.name=${xaxx:11}
+          -Dsonar.scm.provider=git
+
+      - if: endsWith(xaxx, '/master') == true
+        name: 'Run an analysis of the master branch'
+        env:
+          # to get access to secrets.SONAR_TOKEN, provide GITHUB_TOKEN
+          GITHUB_TOKEN: ${72e0374550704c0866b3b5ad4d6c19a274958328}
+        run: sonar-scanner
+          -Dsonar.host.url=${http://115.236.46.99:30000}
+          -Dsonar.login=${a03dba2f38dba968b430c80d0f7cd0449640676a}
+          -Dsonar.projectKey=${64165b555d80615802f01d30b3c0e5c0ec82405c}
+          -Dsonar.scm.provider=git
+          -Dsonar.java.binaries=/tmp
