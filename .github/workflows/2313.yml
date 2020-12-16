@@ -21,10 +21,14 @@ jobs:
       # Use an existing action, you can look in the market place to find what you need and how to use it, to setup the sonar scanner
       - name: SonarScanner for xx
         uses: warchant/setup-sonar-scanner@v1
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
       # Another existing action, this one to checkout the repository
       - name: 'Checkout repository on branch: ${github.REF}'
         uses: actions/checkout@v2
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         with:
           ref: ${github.REF}
           fetch-depth: 0
